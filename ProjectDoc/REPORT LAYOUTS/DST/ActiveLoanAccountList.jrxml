@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BranchAccountList" language="groovy" pageWidth="750" pageHeight="842" columnWidth="710" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="60ac3d09-d922-47fd-9795-e1d821b10c03">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="133"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="M_LOGO" class="java.lang.String"/>
+	<parameter name="BRANCH_NAME" class="java.lang.String"/>
+	<parameter name="LOGO_PATH" class="java.lang.String"/>
+	<parameter name="BRANCH_ADDRESS" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D:\\iReport\\PRMS\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_BranchCode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select PRODUCT_NATURE,
+       LOC_CODE,
+       LOC_NAME,
+       LOAN_CODE,
+       NAME1,
+       SANC_DATE,
+       SANC_AMT,
+       INT_RATE,
+       REPAY_DATE,
+       LOAN_PERIOD,
+       Recovery,
+decode(LN_CRITERIA,'UC','UN-CLASSIFIED (UC)','SS' ,'Sub Standared (SS)','DF','Doubtfull (DF)','BD','Bad(BD)')LN_CRITERIA,
+       BALANCE,
+       OVERDUE,
+       ADD_MONTHS(REPAY_DATE, LOAN_PERIOD) Expiry_date
+  from table(pkg_report_lms.fn_activeLoan_data('2020-2021',$P{p_BranchCode} ))
+ order by LN_CRITERIA,PRODUCT_NATURE, LOC_CODE, LOAN_CODE]]>
+	</queryString>
+	<field name="PRODUCT_NATURE" class="java.lang.String"/>
+	<field name="LOC_CODE" class="java.lang.String"/>
+	<field name="LOC_NAME" class="java.lang.String"/>
+	<field name="LOAN_CODE" class="java.lang.String"/>
+	<field name="NAME1" class="java.lang.String"/>
+	<field name="SANC_DATE" class="java.sql.Timestamp"/>
+	<field name="SANC_AMT" class="java.math.BigDecimal"/>
+	<field name="INT_RATE" class="java.math.BigDecimal"/>
+	<field name="REPAY_DATE" class="java.sql.Timestamp"/>
+	<field name="LOAN_PERIOD" class="java.math.BigDecimal"/>
+	<field name="RECOVERY" class="java.math.BigDecimal"/>
+	<field name="LN_CRITERIA" class="java.lang.String"/>
+	<field name="BALANCE" class="java.math.BigDecimal"/>
+	<field name="OVERDUE" class="java.math.BigDecimal"/>
+	<field name="EXPIRY_DATE" class="java.sql.Timestamp"/>
+	<variable name="v_Serial" class="java.lang.Number" resetType="Group" resetGroup="ProductNature">
+		<variableExpression><![CDATA[$V{v_Serial}+1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="v_Overdue" class="java.lang.Double" resetType="Group" resetGroup="ProductNature" calculation="Sum">
+		<variableExpression><![CDATA[$F{OVERDUE}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="v_balance" class="java.lang.Double" resetType="Group" resetGroup="ProductNature" calculation="Sum">
+		<variableExpression><![CDATA[$F{BALANCE}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="v_Recovery" class="java.lang.Double" resetType="Group" resetGroup="ProductNature" calculation="Sum">
+		<variableExpression><![CDATA[$F{RECOVERY}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="ProductNature" isReprintHeaderOnEachPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{LN_CRITERIA}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<staticText>
+					<reportElement x="32" y="15" width="88" height="15" uuid="997db167-e90b-43ce-9344-7c888253f47f"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Loan Code]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="15" width="142" height="15" uuid="5ac996af-eacb-4139-b3bd-9371dbd311b1"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Borrower Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="366" y="15" width="63" height="15" uuid="b2c3206c-8960-41f0-98f0-f0102d8e9a7b"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sanc. Amt.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="262" y="15" width="38" height="15" uuid="cbc3f7b5-f3bf-48bb-ba67-833e0f878e1c"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nature]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="262" y="0" width="448" height="15" forecolor="#000099" uuid="df7bb6af-5821-4eaa-b478-c4e90fd5d558"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LN_CRITERIA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="262" height="15" forecolor="#000099" uuid="e1d48107-4fd2-4ff5-962c-9861db06e8b8"/>
+					<box leftPadding="4" rightPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Classification Type:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="15" width="32" height="15" uuid="90da6147-b00d-47a0-8dc6-4eab47b6061a"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="300" y="15" width="66" height="15" uuid="43fe732a-9d9f-4380-a96e-70dc0798e7cb"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Repay. Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="524" y="15" width="90" height="15" uuid="17c26e0c-5494-4372-85de-e6878e970425"/>
+					<box rightPadding="6">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Overdue]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="614" y="15" width="96" height="15" uuid="10a7a0a1-e3ad-4e17-be46-a5d13715a753"/>
+					<box rightPadding="6">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Balance]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="429" y="15" width="95" height="15" uuid="c5b58060-947a-4091-a9db-4e2c96d6a207"/>
+					<box rightPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Recovery]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<textField pattern="###0.00;-###0.00">
+					<reportElement x="614" y="0" width="96" height="16" forecolor="#000099" uuid="9aa6e916-f103-4291-bc6d-3941c4b68560"/>
+					<box rightPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{v_balance}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00;-###0.00">
+					<reportElement x="524" y="0" width="90" height="16" forecolor="#000099" uuid="673da316-ca05-4d10-9527-2e1ec3057792"/>
+					<box rightPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{v_Overdue}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="274" height="16" forecolor="#000099" uuid="16aa853f-6e3c-4b3a-bee7-5f25d642620f"/>
+					<box rightPadding="2">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Amount for]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="274" y="0" width="155" height="16" forecolor="#000099" uuid="1ef8868a-f46a-40a2-8228-5fcbaa49497b"/>
+					<box leftPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LN_CRITERIA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00">
+					<reportElement x="429" y="0" width="95" height="16" forecolor="#000099" uuid="b334e7f1-3f17-4519-8a3a-9438a267361f"/>
+					<box rightPadding="4">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{v_Recovery}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="539" y="73" width="100" height="20" uuid="0eb4d9de-0720-4ae6-9852-16d17b0f1144"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="206" y="73" width="297" height="20" uuid="ffdc1204-8f84-40c9-9108-e4f4e2784aab"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Account wise classification report(Active Loan List)]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="32" y="0" width="640" height="68" uuid="231d081f-0a9c-4c1c-a30c-7779659a7e10"/>
+				<subreportParameter name="BRANCH_NAME">
+					<subreportParameterExpression><![CDATA[$P{BRANCH_NAME}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="M_LOGO">
+					<subreportParameterExpression><![CDATA[$P{M_LOGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BRANCH_ADDRESS">
+					<subreportParameterExpression><![CDATA[$P{BRANCH_ADDRESS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="LOGO_PATH">
+					<subreportParameterExpression><![CDATA[$P{LOGO_PATH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Header_Portrait.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="32" y="0" width="88" height="16" uuid="14e0c533-8d10-4371-8df1-1f3c3278aead"/>
+				<box leftPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LOAN_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="142" height="16" uuid="66db555b-f85d-4e5e-990d-e6e5c7049fc5"/>
+				<box leftPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAME1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="366" y="0" width="63" height="16" uuid="85ef6a5c-9f86-44a3-84e9-ffac1978a736"/>
+				<box leftPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SANC_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement x="262" y="0" width="38" height="16" uuid="d8d36d6f-9ff6-43b5-8101-a19506d0c54f"/>
+				<box leftPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PRODUCT_NATURE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="32" height="16" uuid="a2d3fbe1-e76e-451e-8e8b-623c4eddc94a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{v_Serial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="300" y="0" width="66" height="16" uuid="8a360abd-67e2-4c70-8ee2-3bd7318341e1"/>
+				<box leftPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SANC_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="524" y="0" width="90" height="16" uuid="0087f823-457c-4df6-b66f-d9bb586ae694"/>
+				<box rightPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{OVERDUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="614" y="0" width="96" height="16" uuid="bd3603d2-1813-43e5-ab1a-6373b6e4ca46"/>
+				<box rightPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{BALANCE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="429" y="0" width="95" height="16" uuid="e17159d4-22c1-4f4a-ac97-287de2cd9d4d"/>
+				<box rightPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{RECOVERY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement x="240" y="1" width="80" height="20" uuid="9232cfc5-7bb0-49aa-a427-de8721d41d71"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="320" y="1" width="40" height="20" uuid="fd84db2b-8cf2-4392-a69f-0820c0c0c3ad"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
