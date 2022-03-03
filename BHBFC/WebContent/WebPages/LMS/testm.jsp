@@ -242,6 +242,7 @@ function FetchData(){
 			SetValue("Method", "FetchLoanData","L");	
 			xmlFinal();				
 			$.ajax({
+				//alert("##");
 				  method: "POST",
 				  url: "TransactionServlet",
 				  data: { DataString: DataMap }

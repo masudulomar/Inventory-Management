@@ -319,15 +319,7 @@ function LoanCodeValidation(event){
 	clear();
 	if (event.keyCode == 13 || event.which == 13) 
 	{
-		if(document.getElementById("LoanCode").value.toString().length != 13)
-		{
-			confirm("Loan Code should be 13 digit");
-			document.getElementById("LoanCode").focus();
-		}
-		else
-		{	
 			document.getElementById("ProductNature").focus();
-		}
 	}
 }
 

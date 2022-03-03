@@ -240,21 +240,29 @@ function FetchData(){
 			SetValue("LoanCode", document.getElementById("LoanCode").value,"N");
 			SetValue("Class", "LmsEntryValidation","N");
 			SetValue("Method", "FetchLoanData","L");	
-			xmlFinal();				
+			xmlFinal();	
+			//alert("###");
 			$.ajax({
+				
 				  method: "POST",
 				  url: "TransactionServlet",
 				  data: { DataString: DataMap }
 				})
-				  .done(function( responseMessage ) {
+				  .done(function( responseMessage ) 
+					{
+					  
 				    var obj = JSON.parse(responseMessage);
-				    if (obj.ERROR_MSG != "") {
+				    if (obj.ERROR_MSG != "") 
+				    {
+				 
 						alert(obj.ERROR_MSG);
 						document.getElementById("LoanCode").focus();	
-					} else {
+					} 
+				    else {
 						if (obj.LOAN_CODE!=null) {
 							var c = confirm("Profile already initialized!! Do you Want to Update?");
-							if (c == true){
+							if (c == true)
+							{
 							document.getElementById("BorrowerName").value = obj.NAME1;
 							document.getElementById("JointBorrower").value= obj.NAME2;
 							document.getElementById("FatherName").value=obj.F_NAME;
@@ -278,7 +286,7 @@ function FetchData(){
 							document.getElementById("BankName").value=obj.BANK_NAME;
 							document.getElementById("BankAccountNo").value=obj.BANK_ACCOUNT_NO;
 							document.getElementById("BorrowerName").focus();
-							  }	
+							}	
 						}
 						else{
 							document.getElementById("BorrowerName").value = "";
@@ -304,10 +312,12 @@ function FetchData(){
 							document.getElementById("BorrowerName").focus();
 						}
 						
-					}		
-			  });		
+					}	
+				    
+			  });	
+			
 		}
-	
+		
 }
 
 
@@ -316,6 +326,7 @@ function LoanCodeValidation(event){
 	clear();
 	if (event.keyCode == 13 || event.which == 13) 
 	{
+		
 		if(document.getElementById("LoanCode").value.toString().length != 13)
 		{
 			confirm("Loan Code should be 13 digit");
