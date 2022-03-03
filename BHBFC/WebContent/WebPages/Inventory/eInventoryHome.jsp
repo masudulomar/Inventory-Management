@@ -1,6 +1,8 @@
 <!-- ***************************************************************************
 |*			Project Name: 	Payroll Management System						  *|
 |*			Developer	: 	1. Mosharraf Hossain Talukder	       		      *|
+|*							2. Masudul Haque Omar							  *|
+|*							3. MD. Peyal Molla								  *|
 |*					   							  							  *|
 |*					 		------------------------------					  *|
 |*					      	ICT Department, HO BHBFC.						  *|
@@ -13,7 +15,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" href="../../Media/bhbfc_icon.ico"> 
+<link rel="shortcut icon" href="../../Media/bhbfc_icon.ico">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -195,8 +197,8 @@ function Redirect(){
 				<button class="dropbtn">Entry <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-				    <a href="eProductEntry.jsp" target="contents_1"><i class="fa fa-user-plus" style="font-size: 15px"></i> Buy Product</a>
-					<a href="eProductEntry.jsp" target="contents_1"><i class="fa fa-user-plus" style="font-size: 15px"></i> Disburse Product</a>
+				    <a href="eBuyEntry.jsp" target="contents_1"><i class="fa fa-user-plus" style="font-size: 15px"></i> Buy Product</a>
+					<a href="eDistributionEntry.jsp" target="contents_1"><i class="fa fa-user-plus" style="font-size: 15px"></i> Distribution Product</a>
 					<a href="eProductEntry.jsp" target="contents_1"><i class="fa fa-user-plus" style="font-size: 15px"></i> Authorize Product Disbursement</a>					
 				</div>
 			</div>
@@ -228,7 +230,7 @@ function Redirect(){
 	</center>
 	<footer>
 	<div style="text-align: center;">
-            <p>Copyright &#xA9; 2019.
+            <p>Copyright &#xA9; 2022.
               <strong>Design & Developed By ICT Department, <a href="http://www.bhbfc.gov.bd/" target="_blank">BHBFC.</a></strong>
               All Rights Reserved.</p>              
         </div>

@@ -295,18 +295,23 @@ function Redirect(){
 				</div>
 			</div>
 			
+			
+			<a class="active" href="../Inventory/eInventoryHome.jsp"><i class="fa fa-fw fa-down" ></i>Inventory</a>
+			
+			<!-- 
 			<div class="dropdown">
 				<button class="dropbtn"> IMS <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="eInventoryHome.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> eInventory Home</a>
-				    <a href="eProductEntry.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Bought Product Entry</a>
-					<a href="MISLoanRecovery.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Distribution Entry</a>
+					<a href="../Inventory/eInventoryHome.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> eInventory Home</a>
+				    <a href="../Inventory/eProductEntry.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Bought Item Entry</a>
+					<a href="../LMS/eLoanDisburse.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Distribution Entry</a>
 					<a href="MISKharidabari.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Update Inventory</a>
 					<a href="MISCourtCaseSettlement.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> DashBoard</a>
 					<a href="MISDeedReturnFaultyCases.jsp" target="contents_1"><i class="fa fa-plus-circle" style="font-size: 15px"></i> Pending Requisitions</a>
 				</div>
 			</div>
+			-->
 			
 			
 			 <!--  <div class="dropdown">
