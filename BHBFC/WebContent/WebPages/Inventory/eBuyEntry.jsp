@@ -256,9 +256,7 @@ function ItemProductValidation(event){
     			}); 
     	  }
        }   
-    	
     } 
- 
  */
 
 function PurchaseDateValidation(event){
@@ -282,10 +280,11 @@ function PriceValidation(event){
 	}
 }
 
-
-function RemarksValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("PhoneOff").focus();
+function SerialFromValidation(event)
+{
+	if (event.keyCode == 13 || event.which == 13) 
+	{
+			document.getElementById("SerialTo").focus();
 	}
 }
 
@@ -296,6 +295,12 @@ function SerialToValidation(event)
 			document.getElementById("Remarks").focus();
 	}
 }
+
+/*function RemarksValidation(event){
+	if (event.keyCode == 13 || event.which == 13) {
+		document.getElementById("submit").focus();
+	}
+}*/
 
 
 function InsertUpdateLoanDataFunc(event)
