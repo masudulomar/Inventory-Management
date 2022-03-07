@@ -77,16 +77,32 @@ input[type=submit]:hover {
 	float: left;
 	width: 20%;
 }
+
+.coll-20 {
+	float: left;
+	width: 60.2%;
+}
+
+.cols-20 {
+	float: left;
+	width: 7%;
+}
 .colr-15 {
 	float: left;
-	width: 15%;
+	width: 12%;
 	margin-left: 50px;
+}
+
+.colrr-15 {
+	float: left;
+	width: 7%;
+	margin-left: 30px;
 }
 .colr-20 {
 	float: left;
-	width: 28%;
-	
+	width: 23.7%;
 }
+
 .col-25 {
 	float: left;
 	width: 40%;
@@ -214,6 +230,37 @@ function ItemProductValidation(event){
 		document.getElementById("PurchaseDate").focus();
 	}
 }
+
+/*
+ function ItemProductValidation(event){   	
+    	if (event.keyCode == 13 || event.which == 13) {   		
+    		if(document.getElementById("ItemProduct").value!=""){   			   		
+    			clear();
+    			SetValue("itemProductdescription", document.getElementById("ItemProduct").value,"N");
+    			SetValue("Class", "AccontingParameterSetup","N");
+    			SetValue("Method", "GLCodeValidation","L");	
+    			xmlFinal();
+    			$.ajax({
+    				  method: "POST",
+    				  url: "TransactionServlet",
+    				  data: { DataString: DataMap }
+    				})
+    				  .done(function( responseMessage ) {
+    				    var obj = JSON.parse(responseMessage);
+    				    if (obj.ERROR_MSG != "") {
+    						alert(obj.ERROR_MSG);
+    						document.getElementById("glcode").focus();
+    					} else {				 
+    						document.getElementById("DrCrType").focus();
+    					}   						
+    			}); 
+    	  }
+       }   
+    	
+    } 
+ 
+ */
+
 function PurchaseDateValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
 		document.getElementById("NumberOfItems").focus();
@@ -325,48 +372,51 @@ $(function() {
 		
 		<fieldset>
 		<legend>Entry </legend>	
+			
 			<div class="row">
 				<div class="col-15">
 					<label for="ItemProduct">Item Product: </label>
 				</div>
-				<div class="col-20">
-					<input type="text" id="ItemProduct" name="ItemProduct"  onkeypress="ItemProductValidation(event)">
+				<div class="coll-20">
+					<select id="ItemProduct" name="ItemProduct"  onkeypress="ItemProductValidation(event)" style="width: 688px;">
+					</select>
 				</div>
-				<div class="colr-15">
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-15">
 					<label for="PurchaseDate">Purchase Date: </label>
 				</div>
-				<div class="colr-20">
+				<div class="col-20">
 					<input type="text" id="PurchaseDate" name="PurchaseDate">
 				</div>	
-			</div>
-				
-					
-			<div class="row">
-				<div class="col-15">
+
+				<div class="colr-15">
 					<label for="NumberOfItems">Number of Items: </label>
 				</div>
-				<div class="col-20">
+				<div class="colr-20">
 					<input type="text" id="NumberOfItems" name="NumberOfItems"   onkeypress="NumberOfItemsValidation(event)" >
 				</div>
-				<div class="colr-15">
-					<label for="Price">Price: </label>
-				</div>
-				<div class="colr-20">
-					<input type="text" id="Price" name="Price"  onkeypress="PriceValidation(event)">
-				</div>
 			</div>
-				
 			<div class="row">
 				<div class="col-15">
-					<label for="SerialFrom">Serial From: </label>
+					<label for="Price">Price: </label>
 				</div>
 				<div class="col-20">
+					<input type="text" id="Price" name="Price"  onkeypress="PriceValidation(event)">
+				</div>
+
+				<div class="colr-15">
+					<label for="SerialFrom">Serial From: </label>
+				</div>
+				<div class="cols-20">
 					<input type="text" id="SerialFrom" name="SerialFrom"  onkeypress="SerialFromValidation(event)" >
 				</div>
-				<div class="colr-15">
+				<div class="colrr-15">
 					<label for="SerialTo">Serial To: </label>
 				</div>
-				<div class="colr-20">
+				<div class="cols-20">
 					<input type="text" id="SerialTo" name="SerialTo"  onkeypress="SerialToValidation(event)">
 				</div>											
 			 </div>	
@@ -377,10 +427,16 @@ $(function() {
 				<div class="col-15">
 					<label for="Remarks">Remarks: </label>
 				</div>
-				<div class="col-20">
+				<div class="coll-20">
+					<textarea id="Remarks" name="Remarks" rows="2" cols="80"></textarea>
+					<%-- 
 					<input type="text" id="Remarks" name="Remarks"  onkeypress="RemarksValidation(event)">
+					or
+					<textarea id="Remarks" name="Remarks" rows="2" cols="80"></textarea>
+					--%>
 				</div>							
 			</div>
+
 			
 										
 		</fieldset>			  			  			  															

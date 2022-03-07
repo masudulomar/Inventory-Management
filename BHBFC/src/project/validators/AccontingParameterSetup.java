@@ -22,7 +22,6 @@ public class AccontingParameterSetup {
 		ResultMap.clear();
 	}
 	
-	
 	public Map<String, String> GLCodeValidation(Map DataMap) throws Exception {
 		ResultMap.put("ERROR_MSG", "");
 		String glname = null;
