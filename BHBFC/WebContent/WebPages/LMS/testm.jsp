@@ -17,7 +17,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<title>Entry Form</title>
+<title>Inventory Management</title>
 <style>
 
 /* .datepicker
@@ -240,9 +240,10 @@ function FetchData(){
 			SetValue("LoanCode", document.getElementById("LoanCode").value,"N");
 			SetValue("Class", "LmsEntryValidation","N");
 			SetValue("Method", "FetchLoanData","L");	
-			xmlFinal();				
+			
+			xmlFinal();	
+			
 			$.ajax({
-				//alert("##");
 				  method: "POST",
 				  url: "TransactionServlet",
 				  data: { DataString: DataMap }
@@ -250,6 +251,7 @@ function FetchData(){
 				  .done(function( responseMessage ) {
 				    var obj = JSON.parse(responseMessage);
 				    if (obj.ERROR_MSG != "") {
+				    	
 						alert(obj.ERROR_MSG);
 						document.getElementById("LoanCode").focus();	
 					} else {
@@ -303,12 +305,10 @@ function FetchData(){
 							document.getElementById("BankName").value="";    
 							document.getElementById("BankAccountNo").value="";
 							document.getElementById("BorrowerName").focus();
-						}
-						
+						}	
 					}		
 			  });		
 		}
-	
 }
 
 
@@ -317,15 +317,7 @@ function LoanCodeValidation(event){
 	clear();
 	if (event.keyCode == 13 || event.which == 13) 
 	{
-		if(document.getElementById("LoanCode").value.toString().length != 13)
-		{
-			confirm("Loan Code should be 13 digit");
-			document.getElementById("LoanCode").focus();
-		}
-		else
-		{	
 			document.getElementById("ProductNature").focus();
-		}
 	}
 }
 
@@ -431,15 +423,7 @@ function MobileNoValidation(event)
 {
 	if (event.keyCode == 13 || event.which == 13) 
 	{
-		if(document.getElementById("MobileNo").value.toString().length != 11)
-		{
-			confirm("Mobile Number should be 11 digit");
-			document.getElementById("MobileNo").focus();
-		}
-		else
-		{
 			document.getElementById("PhoneRes").focus();
-		}
 	}
 }
 
@@ -541,61 +525,21 @@ function InsertUpdateLoanDataFunc(event)
 </head>
 <body onload="initValues()">
 	<center>
-	<label>Borrower Basic Information</label>
+	<label>Buy Entry Page</label>
 		<div class="container">
 
-		<fieldset>
-		<legend>Borrower Loan Case </legend> 
-			<div class="row">
-				<div class="col-15">
-					<label for="OfficeCode">Office Code</label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="OfficeCode" name="OfficeCode" readonly>
-				</div>
-				<div class="colr-15">
-					<label for="LoanCode">Loan Code</label>
-				</div>
-				<div class="colr-20">
-					<input type="text" id="LoanCode" name="LoanCode" onkeypress="LoanCodeValidation(event)">
-				</div>	
-			</div>
-				
-			<div class="row">
-				<div class="col-15">
-							<label for="ProductNature">Product Nature</label>
-					</div>
-					<div class="col-20" style="width: 185px;">
-						<select id="ProductNature" name="ProductNature" >							
-							<option value="OLD">BHBFC-Deferred</option>
-							<option value="EMI">BHBFC-EMI</option>
-							<option value="ISF">Project-ISF </option>
-							<option value="OCR">Project-OCR </option>
-							<option value="GOV">BHBFC-GOV </option>
-							<option value="MON">Project-MON </option>
-						</select>
-					</div>
-					
-					<div class="colr-15">
-						<input type="submit" id="fetchInfo" value="Fetch Information" onclick="FetchData()" > <br>
-					</div>
-			</div>
-			<input type="hidden" name="User" id="User"></input>	
-			 
-		</fieldset>
-		
 		
 		<fieldset>
-		<legend>Borrower Details </legend>	
+		<legend>Entry </legend>	
 			<div class="row">
 				<div class="col-15">
-					<label for="BorrowerName">Borrower Name: </label>
+					<label for="BorrowerName">Item Product: </label>
 				</div>
 				<div class="col-20">
 					<input type="text" id="BorrowerName" name="BorrowerName"  onkeypress="BorrowerNameValidation(event)">
 				</div>
 				<div class="colr-15">
-					<label for="JointBorrower">Joint borrower: </label>
+					<label for="JointBorrower">Purchase Date: </label>
 				</div>
 				<div class="colr-20">
 					<input type="text" id="JointBorrower" name="JointBorrower"  onkeypress="JointBorrowerValidation(event)" >
@@ -605,13 +549,13 @@ function InsertUpdateLoanDataFunc(event)
 					
 			<div class="row">
 				<div class="col-15">
-					<label for="FatherName">Father Name: </label>
+					<label for="FatherName">Number of Items: </label>
 				</div>
 				<div class="col-20">
 					<input type="text" id="FatherName" name="FatherName"   onkeypress="FatherNameValidation(event)" >
 				</div>
 				<div class="colr-15">
-					<label for="MotherName">Mother Name: </label>
+					<label for="MotherName">Price: </label>
 				</div>
 				<div class="colr-20">
 					<input type="text" id="MotherName" name="MotherName"  onkeypress="MotherNameValidation(event)">
@@ -620,13 +564,13 @@ function InsertUpdateLoanDataFunc(event)
 				
 			<div class="row">
 				<div class="col-15">
-					<label for="HusbandName">Husband Name: </label>
+					<label for="HusbandName">Serial from: </label>
 				</div>
 				<div class="col-20">
 					<input type="text" id="HusbandName" name="HusbandName"  onkeypress="HusbandNameValidation(event)" >
 				</div>
 				<div class="colr-15">
-					<label for="MobileNo">Mobile no: </label>
+					<label for="MobileNo">Serial To: </label>
 				</div>
 				<div class="colr-20">
 					<input type="text" id="MobileNo" name="MobileNo"  onkeypress="MobileNoValidation(event)">
@@ -637,125 +581,14 @@ function InsertUpdateLoanDataFunc(event)
 			
 			<div class="row">		
 				<div class="col-15">
-					<label for="PhoneRes">Phone (Res): </label>
+					<label for="PhoneRes">Remarks: </label>
 				</div>
 				<div class="col-20">
 					<input type="text" id="PhoneRes" name="PhoneRes"  onkeypress="PhoneResValidation(event)">
 				</div>							
-				<div class="colr-15">
-					<label for="PhoneOff">Phone (Off): </label>
-				</div>
-				<div class="colr-20">
-					<input type="text" id="PhoneOff" name="PhoneOff"  onkeypress="PhoneOffValidation(event)">
-				</div>
 			</div>
 			
-			<div class="row">	
-				<div class="col-15">
-					<label for="NID1">NID1: </label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="NID1" name="NID1"  onkeypress="NID1Validation(event)">
-				</div>
-				<div class="colr-15">
-					<label for="Email">Email: </label>
-				</div>
-				<div class="colr-20">
-					<input type="text" id="Email" name="Email"  onkeypress="EmailValidation(event)">
-				</div>									
-				
-			</div>
-			
-			<div class="row">
-				<div class="col-15">
-					<label for="NID2">NID2: </label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="NID2" name="NID2"  onkeypress="NID2Validation(event)">
-				</div>	
-				<div class="colr-15">
-					<label for="ProjCode">Proj code: </label>
-				</div>
-				<%/*
-				<div class="col-1">
-					<input type="text" id="ProjName" name="ProjName"  onkeypress="ProjValidation(event)">
-				</div>
-				*/%>
-				<div class="colr-20">
-					<input type="text" id="ProjCode" name="ProjCode"  onkeypress="ProjCodeValidation(event)">
-				</div>
-				
-			</div>
-			
-			<div class="row">									
-				<div class="col-15">
-					<label for="DistrictCode">District Code: </label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="DistrictCode" name="DistrictCode"   onkeypress="DistrictCodeValidation(event)">
-				</div>	
-				<div class="colr-15">
-					<label for="ThanaCode">Thana Code: </label>
-				</div>
-				<%/*
-				<div class="col-3">
-					<input type="text" id="ThanaName" name="ThanaName"   onkeypress="ThanaNameValidation(event)">
-				</div>	
-				*/%>
-				<div class="colr-20">
-					<input type="text" id="ThanaCode" name="ThanaCode"   onkeypress="ThanaCodeValidation(event)">
-				</div>	
-				
-			</div>
-			<div class="row">
-				<div class="col-15">
-					<label for="TaxId">TAX ID No. (TIN):</label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="TaxId" name="TaxId" onkeypress="TaxIdValidation(event)" >
-				</div>
-				<div class="colr-15">
-					<label for="Profession">Profession:</label>
-				</div>
-				<div class="colr-20">
-					<select name="Profession" id="Profession" onkeypress="ProfessionValidation(event)">
-					  <option value="private" selected>Private Employee</option>
-					  <option value="govt" >Govt. Employee</option>
-					  <option value="business" >Businessman</option>
-					  <option value="others" >Others</option>
-					</select>
-				</div>											
-			 </div>
-			<div class="row">
-				<div class="col-15">
-					<label for="BankName">Bank Name:</label>
-				</div>
-				<div class="col-20">
-					<input type="text" id="BankName" name="BankName" onkeypress="BankNameValidation(event)" >
-				</div>
-				<div class="colr-15">
-					<label for="BankAccountNo">Bank Account No:</label>
-				</div>
-				<div class="colr-20">
-					<input type="text" id="BankAccountNo" name="BankAccountNo" onkeypress="BankAccountNoValidation(event)" >
-				</div>
-															
-			 </div>
-			<div class="row">
-				<div class="col-15">
-					<label for="MailingAddress">Mailing address: </label>
-				</div>
-				<div class="col-20">
-					<textarea id="MailingAddress" name="MailingAddress" rows="2" cols="40"  onkeypress="MailingAddressValidation(event)"></textarea>
-				</div>										
-				<div class="colr-15">
-						<label for="SiteAddress">Site address: </label>
-					</div>
-					<div class="colr-20">
-						<textarea id="SiteAddress" name="SiteAddress" rows="2" cols="40" onkeypress="SiteAddressValidation(event)"></textarea>
-					</div>
-			</div>
-	
+										
 		</fieldset>			  			  			  															
 
 			<div>				

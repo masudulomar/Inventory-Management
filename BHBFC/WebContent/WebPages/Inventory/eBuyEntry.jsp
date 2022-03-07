@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<title>Entry Form</title>
+<title>Buy Product Form</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -197,273 +197,59 @@ function SetValue(key,value,itemsl){
   }
 	var brn_code = "<%= session.getAttribute("BranchCode")%>";
 function initValues(){
-	document.getElementById("OfficeCode").value = brn_code;
-	document.getElementById("LoanCode").value = "";
-	document.getElementById("BorrowerName").value="";   //NAME1
-	document.getElementById("JointBorrower").value="";  //NAME2
-	document.getElementById("FatherName").value="";     //F_NAME
-	document.getElementById("HusbandName").value="";    //H_NAME
-	document.getElementById("MotherName").value="";     //M_NAME
-	document.getElementById("MailingAddress").value=""; //M_ADD1
-	document.getElementById("PhoneRes").value="";       //PHONE_RES
-	document.getElementById("PhoneOff").value="";       //PHONE_OFF
-	document.getElementById("MobileNo").value="";	    //CELL_NO				
-	document.getElementById("SiteAddress").value="";    //S_ADD1
-	document.getElementById("Email").value="";          //EMAIL
-	document.getElementById("ProjCode").value="";       //PROJ_CODE
-	document.getElementById("NID1").value="";           //NID1
-	document.getElementById("DistrictCode").value="";   //S_DIST_CODE
-	document.getElementById("NID2").value="";           //NID2
-	document.getElementById("TaxId").value="";      //S_THANA_CODE
-	//document.getElementById("Profession").value="";    
-	document.getElementById("BankName").value="";    
-	document.getElementById("BankAccountNo").value="";    
-	document.getElementById("LoanCode").focus();
-	   
-}
-
-function FetchData(){
-		
-												
 	
-		if(document.getElementById("LoanCode").value.toString().length != 13)
-		{
-			confirm("Loan Code should be 13 digit");
-			document.getElementById("LoanCode").focus();
-		}
-		else
-		{	
-			clear();
-			var string=document.getElementById("LoanCode").value;
-			//document.getElementById("LoanCode").value=string.padStart(13, '0');
-			SetValue("OfficeCode", document.getElementById("OfficeCode").value,"N");
-			SetValue("LoanCode", document.getElementById("LoanCode").value,"N");
-			SetValue("Class", "LmsEntryValidation","N");
-			SetValue("Method", "FetchLoanData","L");	
-			
-			xmlFinal();	
-			
-			$.ajax({
-				  method: "POST",
-				  url: "TransactionServlet",
-				  data: { DataString: DataMap }
-				})
-				  .done(function( responseMessage ) {
-				    var obj = JSON.parse(responseMessage);
-				    if (obj.ERROR_MSG != "") {
-				    	
-						alert(obj.ERROR_MSG);
-						document.getElementById("LoanCode").focus();	
-					} else {
-						if (obj.LOAN_CODE!=null) {
-							var c = confirm("Profile already initialized!! Do you Want to Update?");
-							if (c == true){
-							document.getElementById("BorrowerName").value = obj.NAME1;
-							document.getElementById("JointBorrower").value= obj.NAME2;
-							document.getElementById("FatherName").value=obj.F_NAME;
-							document.getElementById("HusbandName").value=obj.H_NAME;
-							document.getElementById("MotherName").value=obj.M_NAME;
-							document.getElementById("MailingAddress").value=obj.M_ADD;
-							document.getElementById("PhoneRes").value=obj.PHONE_RES;
-							document.getElementById("PhoneOff").value=obj.PHONE_OFF;
-							document.getElementById("MobileNo").value=obj.CELL_NO;						
-							document.getElementById("SiteAddress").value=obj.S_ADD;
-							document.getElementById("Email").value=obj.EMAIL;
-							document.getElementById("ProjCode").value=obj.PROJ_CODE;
-							document.getElementById("NID1").value=obj.NID1;
-							document.getElementById("DistrictCode").value=obj.S_DIST_CODE;
-							document.getElementById("NID2").value=obj.NID2;
-							document.getElementById("ThanaCode").value=obj.S_THANA_CODE;
-							document.getElementById("TaxId").value=obj.TIN_NO;
-							
-							
-							document.getElementById("Profession").value=obj.PROFESSION;
-							document.getElementById("BankName").value=obj.BANK_NAME;
-							document.getElementById("BankAccountNo").value=obj.BANK_ACCOUNT_NO;
-							document.getElementById("BorrowerName").focus();
-							  }	
-						}
-						else{
-							document.getElementById("BorrowerName").value = "";
-							document.getElementById("JointBorrower").value= "";
-							document.getElementById("FatherName").value="";
-							document.getElementById("HusbandName").value="";
-							document.getElementById("MotherName").value="";
-							document.getElementById("MailingAddress").value="";
-							document.getElementById("PhoneRes").value="";
-							document.getElementById("PhoneOff").value="";
-							document.getElementById("MobileNo").value="";						
-							document.getElementById("SiteAddress").value="";
-							document.getElementById("Email").value="";
-							document.getElementById("ProjCode").value="";
-							document.getElementById("NID1").value="";
-							document.getElementById("DistrictCode").value="";
-							document.getElementById("NID2").value="";
-							document.getElementById("ThanaCode").value="";
-							document.getElementById("TaxId").value="";      //S_THANA_CODE
-							//document.getElementById("Profession").value="";    
-							document.getElementById("BankName").value="";    
-							document.getElementById("BankAccountNo").value="";
-							document.getElementById("BorrowerName").focus();
-						}
-						
-					}		
-			  });		
-		}
-	
+	document.getElementById("ItemProduct").value="";   //
+	document.getElementById("PurchaseDate").value="";  //
+	document.getElementById("NumberOfItems").value=""; //
+	document.getElementById("Price").value="";         //
+	document.getElementById("SerialFrom").value="";    //
+	document.getElementById("SerialTo").value="";	   //
+	document.getElementById("Remarks").value="";       //
+
 }
 
 
-
-function LoanCodeValidation(event){
-	clear();
-	if (event.keyCode == 13 || event.which == 13) 
-	{
-			document.getElementById("ProductNature").focus();
-	}
-}
-
-function BorrowerNameValidation(event){
+function ItemProductValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("JointBorrower").focus();
+		document.getElementById("PurchaseDate").focus();
 	}
 }
-function JointBorrowerValidation(event){
+function PurchaseDateValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("FatherName").focus();
+		document.getElementById("NumberOfItems").focus();
 	}
 }
-function FatherNameValidation(event){
+function NumberOfItemsValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("MotherName").focus();
+		document.getElementById("Price").focus();
 	}
 }
-function HusbandNameValidation(event){
+function SerialFromValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("MobileNo").focus();
+		document.getElementById("SerialTo").focus();
 	}
 }
-function MotherNameValidation(event){
+function PriceValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("HusbandName").focus();
-	}
-}
-function MailingAddressValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("SiteAddress").focus();
-	}
-}
-function SiteAddressValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("submit").focus();
-	}
-}
-function DistrictCodeValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("ThanaCode").focus();
-	}
-}
-function ThanaCodeValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("TaxId").focus();
-		
-	}
-}
-function TaxIdValidation(event){
-	if(event.keycode == 13 || event.which == 13){
-		if(document.getElementById("TaxId")==""){
-			document.getElementById("TaxId").focus();
-		}else{
-			document.getElementById("Profession").focus();
-		}
+		document.getElementById("SerialFrom").focus();
 	}
 }
 
 
-
-function ProfessionValidation(event){
-	if(event.keycode == 13 || event.which == 13){
-		if(document.getElementById("Profession")==""){
-			document.getElementById("Profession").focus();
-		}else{
-			document.getElementById("BankName").focus();
-		}
-	}
-}
-
-function BankNameValidation(event){
-	if(event.keycode == 13 || event.which == 13){
-		if(document.getElementById("BankName").value==""){
-			document.getElementById("BankName").focus();
-		}else{
-			document.getElementById("BankAccountNo").focus();
-		}
-		
-	}
-}
-
-function BankAccountNoValidation(event){
-	if(event.keycode == 13 || event.which == 13){
-		if(document.getElementById("BankAccountNo")==""){
-			document.getElementById("BankAccountNo").focus();
-		}else{
-			document.getElementById("MailingAddress").focus();
-		}
-	}
-}
-function PhoneResValidation(event){
+function RemarksValidation(event){
 	if (event.keyCode == 13 || event.which == 13) {
 		document.getElementById("PhoneOff").focus();
 	}
 }
-function PhoneOffValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("NID1").focus();
-	}
-}
-function MobileNoValidation(event)
+
+function SerialToValidation(event)
 {
 	if (event.keyCode == 13 || event.which == 13) 
 	{
-			document.getElementById("PhoneRes").focus();
+			document.getElementById("Remarks").focus();
 	}
 }
 
-function EmailValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		//if(1)
-		if(document.getElementById("Email").value.toString().indexOf('@')==-1 || document.getElementById("Email").value.toString().indexOf('@')==0 || document.getElementById("Email").value.toString().indexOf('@')+1==document.getElementById("Email").value.toString().length)
-		{
-			//confirm(document.getElementById("Email").value.toString().indexOf('@'));
-			confirm("Email Address in not valid");
-			document.getElementById("Email").focus();
-		}
-		else
-		{
-			document.getElementById("NID2").focus();
-		}
-	}
-}
-function ProductNatureValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("FetchInfo").focus();
-	}
-}
-function ProjCodeValidation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("DistrictCode").focus();
-	}
-}
-function NID1Validation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("Email").focus();
-	}
-}
-function NID2Validation(event){
-	if (event.keyCode == 13 || event.which == 13) {
-		document.getElementById("ProjCode").focus();
-	}
-}
 
 function InsertUpdateLoanDataFunc(event)
 {	
@@ -477,16 +263,16 @@ function InsertUpdateLoanDataFunc(event)
 		    SetValue("OfficeCode",office_code,"N");
 			SetValue("LoanCode",document.getElementById("LoanCode").value,"N");
 			SetValue("ProductNature",document.getElementById("ProductNature").value,"N");
-			SetValue("BorrowerName",document.getElementById("BorrowerName").value,"N");
-			SetValue("JointBorrower",document.getElementById("JointBorrower").value,"N");
-			SetValue("FatherName",document.getElementById("FatherName").value,"N");
-			SetValue("HusbandName",document.getElementById("HusbandName").value,"N");
-			SetValue("MotherName",document.getElementById("MotherName").value,"N");
+			SetValue("ItemProduct",document.getElementById("ItemProduct").value,"N");
+			SetValue("PurchaseDate",document.getElementById("PurchaseDate").value,"N");
+			SetValue("NumberOfItems",document.getElementById("NumberOfItems").value,"N");
+			SetValue("SerialFrom",document.getElementById("SerialFrom").value,"N");
+			SetValue("Price",document.getElementById("Price").value,"N");
 			SetValue("MailingAddress",document.getElementById("MailingAddress").value,"N");
 			
-			SetValue("PhoneRes",document.getElementById("PhoneRes").value,"N");
+			SetValue("Remarks",document.getElementById("Remarks").value,"N");
 			SetValue("PhoneOff",document.getElementById("PhoneOff").value,"N");
-			SetValue("MobileNo",document.getElementById("MobileNo").value,"N");
+			SetValue("SerialTo",document.getElementById("SerialTo").value,"N");
 			SetValue("SiteAddress",document.getElementById("SiteAddress").value,"N");
 			SetValue("Email",document.getElementById("Email").value,"N");
 			SetValue("ProjCode",document.getElementById("ProjCode").value,"N");
@@ -523,6 +309,12 @@ function InsertUpdateLoanDataFunc(event)
 	   }					
 }
 
+$(function() {
+	$("#PurchaseDate").datepicker({
+		dateFormat : 'dd-M-yy'
+	});
+});
+
 </script>
 </head>
 <body onload="initValues()">
@@ -535,47 +327,47 @@ function InsertUpdateLoanDataFunc(event)
 		<legend>Entry </legend>	
 			<div class="row">
 				<div class="col-15">
-					<label for="BorrowerName">Item Product: </label>
+					<label for="ItemProduct">Item Product: </label>
 				</div>
 				<div class="col-20">
-					<input type="text" id="BorrowerName" name="BorrowerName"  onkeypress="BorrowerNameValidation(event)">
+					<input type="text" id="ItemProduct" name="ItemProduct"  onkeypress="ItemProductValidation(event)">
 				</div>
 				<div class="colr-15">
-					<label for="JointBorrower">Purchase Date: </label>
+					<label for="PurchaseDate">Purchase Date: </label>
 				</div>
 				<div class="colr-20">
-					<input type="text" id="JointBorrower" name="JointBorrower"  onkeypress="JointBorrowerValidation(event)" >
+					<input type="text" id="PurchaseDate" name="PurchaseDate">
 				</div>	
 			</div>
 				
 					
 			<div class="row">
 				<div class="col-15">
-					<label for="FatherName">Number of Items: </label>
+					<label for="NumberOfItems">Number of Items: </label>
 				</div>
 				<div class="col-20">
-					<input type="text" id="FatherName" name="FatherName"   onkeypress="FatherNameValidation(event)" >
+					<input type="text" id="NumberOfItems" name="NumberOfItems"   onkeypress="NumberOfItemsValidation(event)" >
 				</div>
 				<div class="colr-15">
-					<label for="MotherName">Price: </label>
+					<label for="Price">Price: </label>
 				</div>
 				<div class="colr-20">
-					<input type="text" id="MotherName" name="MotherName"  onkeypress="MotherNameValidation(event)">
+					<input type="text" id="Price" name="Price"  onkeypress="PriceValidation(event)">
 				</div>
 			</div>
 				
 			<div class="row">
 				<div class="col-15">
-					<label for="HusbandName">Serial from: </label>
+					<label for="SerialFrom">Serial From: </label>
 				</div>
 				<div class="col-20">
-					<input type="text" id="HusbandName" name="HusbandName"  onkeypress="HusbandNameValidation(event)" >
+					<input type="text" id="SerialFrom" name="SerialFrom"  onkeypress="SerialFromValidation(event)" >
 				</div>
 				<div class="colr-15">
-					<label for="MobileNo">Serial To: </label>
+					<label for="SerialTo">Serial To: </label>
 				</div>
 				<div class="colr-20">
-					<input type="text" id="MobileNo" name="MobileNo"  onkeypress="MobileNoValidation(event)">
+					<input type="text" id="SerialTo" name="SerialTo"  onkeypress="SerialToValidation(event)">
 				</div>											
 			 </div>	
 				
@@ -583,10 +375,10 @@ function InsertUpdateLoanDataFunc(event)
 			
 			<div class="row">		
 				<div class="col-15">
-					<label for="PhoneRes">Remarks: </label>
+					<label for="Remarks">Remarks: </label>
 				</div>
 				<div class="col-20">
-					<input type="text" id="PhoneRes" name="PhoneRes"  onkeypress="PhoneResValidation(event)">
+					<input type="text" id="Remarks" name="Remarks"  onkeypress="RemarksValidation(event)">
 				</div>							
 			</div>
 			
